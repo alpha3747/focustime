@@ -5,7 +5,7 @@ import {
   ToastAndroid,
   TouchableOpacity,
   View,
-  TextInput, // ← Use RN’s TextInput
+  TextInput,
 } from "react-native";
 import { fontSizes, paddingSizes } from "../../utils/sizes";
 import { colors } from "../../utils/colors";
