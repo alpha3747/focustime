@@ -1,3 +1,5 @@
+// credit for this animation goes to someone else, i didnt make it
+
 import React, { useEffect, useRef } from "react";
 import { Animated } from "react-native";
 import Svg, { Circle } from "react-native-svg";

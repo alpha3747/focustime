@@ -13,7 +13,7 @@ import { CircleProgress } from "../../components/CircleProgress";
 
 export const Timer = ({ focusSubject, minutes, onGoBack }) => {
   const [timeLeft, setTimeLeft] = useState(minutes * 60);
-  const [isPaused, setIsPaused] = useState(null);
+  // const [isPaused, setIsPaused] = useState(null);
   const intervalRef = useRef(null);
 
   const totalTime = minutes * 60;
@@ -23,14 +23,6 @@ export const Timer = ({ focusSubject, minutes, onGoBack }) => {
     return () => clearInterval(intervalRef.current);
   }, []);
 
-  useEffect(() => {
-    if (isPaused) {
-      clearInterval(intervalRef.current);
-    } else {
-      startTimer();
-    }
-  }, [isPaused]);
-
   const startTimer = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -38,26 +30,25 @@ export const Timer = ({ focusSubject, minutes, onGoBack }) => {
         if (prev <= 1) {
           clearInterval(intervalRef.current);
           Vibration.vibrate(500);
-          // sendNotification(); 
-            return 0;
+          // sendNotification();
+          return 0;
         }
         return prev - 1;
       });
     }, 1000);
   };
 
-  const handlePause = () => setIsPaused(true);
-  const handleResume = () => setIsPaused(false);
+  const handlePause = () => clearInterval(intervalRef.current);
+
+  const handleResume = () => startTimer();
   const handleRestart = () => {
     clearInterval(intervalRef.current);
     setTimeLeft(minutes * 60);
-    setIsPaused(false);
     startTimer();
   };
   const handleStop = () => {
     clearInterval(intervalRef.current);
     setTimeLeft(0);
-    setIsPaused(true);
   };
 
   const formatTime = (time) => {

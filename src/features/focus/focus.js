@@ -30,7 +30,7 @@ export const Focus = ({ onStartFocus }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>What would you like to focus on?</Text>
+      <Text style={styles.heading}>What are we focusing on?</Text>
 
       <TextInput
         value={subject}
