@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Vibration,
+  ToastAndroid,
 } from "react-native";
 import { colors } from "../../utils/colors";
 import { fontSizes, paddingSizes } from "../../utils/sizes";
@@ -31,6 +32,7 @@ export const Timer = ({ focusSubject, minutes, onGoBack }) => {
           clearInterval(intervalRef.current);
           Vibration.vibrate(500);
           // sendNotification();
+          ToastAndroid.show("Focus session complete!", ToastAndroid.LONG);
           return 0;
         }
         return prev - 1;
