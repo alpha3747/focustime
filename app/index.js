@@ -3,6 +3,7 @@ import { View, StyleSheet } from "react-native";
 import { colors } from "../src/utils/colors.js";
 import { Focus } from "../src/features/focus/focus";
 import { Timer } from "../src/features/timer/timer.js";
+import Toast from "react-native-toast-message";
 
 const App = () => {
   const [focusSubject, setFocusSubject] = useState(null);
@@ -14,20 +15,23 @@ const App = () => {
   };
 
   return (
-    <View style={styles.container}>
-      {focusSubject ? (
-        <Timer
-          focusSubject={focusSubject}
-          minutes={duration}
-          onGoBack={() => {
-            setFocusSubject(null);
-            setDuration(0);
-          }}
-        />
-      ) : (
-        <Focus onStartFocus={startFocus} />
-      )}
-    </View>
+    <>
+      <View style={styles.container}>
+        {focusSubject ? (
+          <Timer
+            focusSubject={focusSubject}
+            minutes={duration}
+            onGoBack={() => {
+              setFocusSubject(null);
+              setDuration(0);
+            }}
+          />
+        ) : (
+          <Focus onStartFocus={startFocus} />
+        )}
+      </View>
+      <Toast />
+    </>
   );
 };
 

@@ -9,10 +9,14 @@ import {
 import { colors } from "../../utils/colors";
 import { fontSizes, paddingSizes } from "../../utils/sizes";
 // import * as Notifications from "expo-notifications";
+import { Audio } from "expo-av";
+import Toast from "react-native-toast-message";
 import { CircleProgress } from "../../components/CircleProgress";
 
 export const Timer = ({ focusSubject, minutes, onGoBack }) => {
   const [timeLeft, setTimeLeft] = useState(minutes * 60);
+  // for testing
+  // const [timeLeft, setTimeLeft] = useState(minutes * 5);
   const [isPaused, setIsPaused] = useState(null);
   const intervalRef = useRef(null);
 
@@ -31,6 +35,14 @@ export const Timer = ({ focusSubject, minutes, onGoBack }) => {
     }
   }, [isPaused]);
 
+  // sound play function
+  async function play() {
+    const { sound } = await Audio.Sound.createAsync(
+      require("../../../assets/tingSound.mp3")
+    );
+    await sound.playAsync();
+  }
+
   const startTimer = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
@@ -38,8 +50,15 @@ export const Timer = ({ focusSubject, minutes, onGoBack }) => {
         if (prev <= 1) {
           clearInterval(intervalRef.current);
           Vibration.vibrate(500);
-          // sendNotification(); 
-            return 0;
+          play(); // soundNotification
+
+          Toast.show({
+            type: "success",
+            text1: "Great Job, focus session complete!",
+            visibilityTime: 5000,
+          });
+
+          return 0;
         }
         return prev - 1;
       });
@@ -51,6 +70,8 @@ export const Timer = ({ focusSubject, minutes, onGoBack }) => {
   const handleRestart = () => {
     clearInterval(intervalRef.current);
     setTimeLeft(minutes * 60);
+    // for testing
+    // setTimeLeft(minutes * 5);
     setIsPaused(false);
     startTimer();
   };

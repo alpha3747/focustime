@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
-  ToastAndroid,
   TouchableOpacity,
   View,
-  TextInput, 
+  TextInput,
 } from "react-native";
 import { fontSizes, paddingSizes } from "../../utils/sizes";
 import { colors } from "../../utils/colors";
+import Toast from "react-native-toast-message";
 
 export const Focus = ({ onStartFocus }) => {
   const [subject, setSubject] = useState("");
@@ -16,11 +16,19 @@ export const Focus = ({ onStartFocus }) => {
 
   const handleStart = () => {
     if (!subject.trim()) {
-      ToastAndroid.show("Please enter a task", ToastAndroid.SHORT);
+      Toast.show({
+        type: "error",
+        text1: "Please enter a task",
+        visibilityTime: 2500,
+      });
       return;
     }
     if (!selectedDuration) {
-      ToastAndroid.show("Please select a duration", ToastAndroid.SHORT);
+      Toast.show({
+        type: "error",
+        text1: "Please select a duration",
+        visibilityTime: 2500,
+      });
       return;
     }
     onStartFocus(subject.trim(), selectedDuration);
